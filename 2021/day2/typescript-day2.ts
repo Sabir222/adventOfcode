@@ -2,8 +2,6 @@ import * as path from "path"
 import * as fs from "fs"
 
 
-
-
 type Direction = {
 	x: number
 	y: number
