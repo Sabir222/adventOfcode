@@ -13,6 +13,7 @@ func check(e error) {
 		panic(e)
 	}
 }
+
 func getInput(fileName string) string {
 	input, err := os.ReadFile(fileName)
 	check(err)
@@ -20,9 +21,7 @@ func getInput(fileName string) string {
 }
 
 func convertStringToint(string []string) []int {
-
 	numbers := []int{}
-
 	for _, str := range string {
 		str = strings.TrimSpace(str)
 		if str == "" {
@@ -36,13 +35,13 @@ func convertStringToint(string []string) []int {
 	}
 	return numbers
 }
-func main() {
 
+func main() {
 	data := getInput("input.txt")
 	count := 0
 	inputs := strings.Split(data, "\n")
 	numbers := convertStringToint(inputs)
-	//var prev int
+	// var prev int
 
 	for i := 0; i < len(numbers)-4; i++ {
 
@@ -51,7 +50,7 @@ func main() {
 		// }
 		// prev = numbers[i]
 
-		//PART2
+		// PART2
 
 		curr := numbers[i] + numbers[i+1] + numbers[i+2]
 		next := numbers[i+1] + numbers[i+2] + numbers[i+3]
@@ -60,7 +59,7 @@ func main() {
 			count++
 		}
 
-		//PART1
+		// PART1
 		// if numbers[i] < numbers[i+1] {
 		// 	count++
 		// }
