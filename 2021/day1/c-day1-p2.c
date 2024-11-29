@@ -1,45 +1,73 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-struct {
-  char *name;
-  int model;
-} car;
-void readFile(const char *filepath) {
-  FILE *fptr;
-  int total = 0;
-  int previous = 0;
-  char buffer[100];
-
-  int *arr = malloc(10 * sizeof(int));
-  if (arr == NULL) {
-    perror("Memory allocation failed");
-    exit(EXIT_FAILURE);
-  }
-
-  fptr = fopen(filepath, "r");
-  /* checking if there no file*/
-  if (fptr != NULL) {
-    if (fgets(buffer, 100, fptr) != NULL) {
-      previous = atoi(buffer);
-    }
-    /* reading file lines*/
-    while (fgets(buffer, sizeof(buffer), fptr)) {
-      int current = atoi(buffer);
-      if (current > previous) {
-        total++;
+int *getData(const char *filepath) {
+  FILE *file;
+  char buffer[16];
+  int *array = NULL;
+  int size = 0;
+  int capacity = 0;
+  unsigned char increment = 10;
+  int num;
+  file = fopen(filepath, "r");
+  if (file != NULL) {
+    while (fgets(buffer, sizeof(buffer), file)) {
+      if (sscanf(buffer, "%d", &num) != 1) {
+        printf("Failed to extract number");
+        exit(0);
       }
-
-      previous = current;
+      if (size == capacity) {
+        capacity += increment;
+        array = realloc(array, capacity * sizeof(int));
+        if (array == NULL) {
+          perror("Memory allocation failed.");
+          fclose(file);
+          exit(0);
+        }
+      }
+      array[size++] = num;
     }
-    fclose(fptr);
-    printf("the result: %d\n", total);
+    fclose(file);
   } else {
     perror("File not found!");
+    exit(0);
   }
+  return array;
+}
+int arr_length(int *arr) {
+  int count = 0;
+  for (int i = 0; arr[i] != '\0'; i++) {
+    count++;
+  }
+  return count++;
+}
+
+int processData(int *data) {
+  int result = 0;
+  int index = 0;
+  int count = 0;
+  int length = arr_length(data);
+
+  while (index + 3 < length) {
+    if (data[2] == '\0') {
+      break;
+    }
+    int prev = data[index] + data[index + 1] + data[index + 2];
+    int curr = data[index + 1] + data[index + 2] + data[index + 3];
+
+    if (curr > prev) {
+      result += curr;
+      count++;
+    }
+    index++;
+  }
+  printf("%d", count);
+  return result;
 }
 
 int main() {
-  readFile("input.txt");
+  int *data = getData("input.txt");
+  processData(data);
+  free(data);
   return 0;
 }
