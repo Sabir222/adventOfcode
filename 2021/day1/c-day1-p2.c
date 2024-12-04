@@ -61,13 +61,12 @@ int processData(int *data) {
     }
     index++;
   }
-  printf("%d", count);
+  printf("C day1 part 2 result is : %d\n", count);
   return result;
 }
 
-int main() {
-  int *data = getData("input.txt");
+void c_day1_p2() {
+  int *data = getData("./day1/input.txt");
   processData(data);
   free(data);
-  return 0;
 }

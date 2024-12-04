@@ -20,13 +20,10 @@ void readFile(const char *filepath) {
       previous = current;
     }
     fclose(fptr);
-    printf("the result: %d\n", total);
+    printf("C day1 part 1 result is : %d\n", total);
   } else {
     perror("File not found!");
   }
 }
 
-int main() {
-  readFile("input.txt");
-  return 0;
-}
+void c_day1_p1() { readFile("./day1/input.txt"); }
